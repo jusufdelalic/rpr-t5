@@ -106,4 +106,112 @@ class MainTest {
         robot.clickOn("#btn0");
         assertEquals("10", display.getText());
     }
+
+    @Test
+    public void testDivisionByZero (FxRobot robot) {
+        display = robot.lookup("#display").queryAs(Label.class);
+        try {
+            robot.clickOn("#btn5");
+            robot.clickOn("#divideBtn");
+            robot.clickOn("#btn0");
+        }
+        catch (IllegalArgumentException except) {
+            assertEquals("Division by zero", except.getMessage());
+        }
+    }
+
+
+        @Test
+        public void testSubstract (FxRobot robot) {
+            display = robot.lookup("#display").queryAs(Label.class);
+
+                robot.clickOn("#btn5");
+                robot.clickOn("#dotBtn");
+                robot.clickOn("#btn3");
+                robot.clickOn("#minusBtn");
+                robot.clickOn("#btn2");
+                robot.clickOn("#equalsBtn");
+
+                assertEquals("3.3", display.getText());
+
+
+    }
+
+    @Test
+    public void testMultiply (FxRobot robot) {
+        display = robot.lookup("#display").queryAs(Label.class);
+
+        robot.clickOn("#btn5");
+        robot.clickOn("#dotBtn");
+        robot.clickOn("#btn3");
+        robot.clickOn("#multiplyBtn");
+        robot.clickOn("#btn2");
+        robot.clickOn("#equalsBtn");
+
+        assertEquals("10.6", display.getText());
+
+
+    }
+
+    @Test
+    public void testDivide (FxRobot robot) {
+        display = robot.lookup("#display").queryAs(Label.class);
+
+        robot.clickOn("#btn5");
+        robot.clickOn("#dotBtn");
+        robot.clickOn("#btn3");
+        robot.clickOn("#divideBtn");
+        robot.clickOn("#btn2");
+        robot.clickOn("#equalsBtn");
+
+        assertEquals("2.65", display.getText());
+
+
+    }
+
+    @Test
+    public void testMod (FxRobot robot) {
+        display = robot.lookup("#display").queryAs(Label.class);
+
+        robot.clickOn("#btn5");
+        robot.clickOn("#percentageBtn");
+        robot.clickOn("#btn3");
+        robot.clickOn("#equalsBtn");
+
+        assertEquals("2.0", display.getText());
+
+    }
+
+    @Test
+    public void testModException (FxRobot robot) {
+        display = robot.lookup("#display").queryAs(Label.class);
+
+            try {
+                robot.clickOn("#btn5");
+                robot.clickOn("#dotBtn");
+                robot.clickOn("#btn1");
+                robot.clickOn("#percentageBtn");
+                robot.clickOn("#btn3");
+
+            }
+
+        catch(IllegalArgumentException exception) {
+
+            assertEquals("Remainder not defined for non-integers", exception.getMessage());
+        }
+
+    }
+
+    @Test
+    public void testClickingTheSameNumberTwice (FxRobot robot) {
+
+            display = robot.lookup("#display").queryAs(Label.class);
+
+            robot.clickOn("#btn2");
+            robot.clickOn("#btn2");
+
+
+            assertEquals("22", display.getText());
+    }
+
 }

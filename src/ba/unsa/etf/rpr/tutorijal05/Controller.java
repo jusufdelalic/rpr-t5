@@ -14,23 +14,25 @@ public class Controller {
     private int lastOperation;
     private String firstInput;
 
-    public Button btn0,btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9;
-
-    public Button equals;
-    public Button plus;
-    public Button minus;
-    public Button percentage;
-    public Button multiply;
-    public Button divide;
-    public Button comma;
-
-    boolean decimalSeparator = false;
-    boolean newNumber = false;
-
     public Label display;
 
+    public Button btn0,btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9;
+
+    public Button equalsBtn;
+    public Button plusBtn;
+    public Button minusBtn;
+    public Button percentageBtn;
+    public Button multiplyBtn;
+    public Button divideBtn;
+    public Button dotBtn;
+
+    private boolean decimalSeparator = false;
+    private boolean newNumber = true;
+
+
+
     public Controller() {
-        displayText.set("0");
+        displayText = new SimpleStringProperty("0");
     }
 
     public SimpleStringProperty displayTextProperty () {
@@ -42,14 +44,13 @@ public class Controller {
     }
 
     public void setDisplayText(String value) {
-
         displayText.set(value);
     }
 
     private void numberInput(String number) {
 
         if (lastOperation == 0) {
-            if (getDisplayText().length() > 9)
+            if (getDisplayText().length() > 9) // max length
                 return;
             setDisplayText(getDisplayText() + number); //adding a new number
         }
@@ -69,7 +70,7 @@ public class Controller {
             setDisplayText(getDisplayText().substring(1)); // 05 = 5
     }
 
-    public void equalClick (ActionEvent actionEvent){
+    public void equalClick (ActionEvent actionEvent) throws IllegalArgumentException{
 
 
             String secondInput = getDisplayText();
@@ -77,32 +78,38 @@ public class Controller {
             double firstNumber = Double.parseDouble(firstInput);
             double secondNumber = Double.parseDouble(secondInput);
 
-            double rezultat;
-            switch (lastOperation) {
+            double result;
+            switch (lastOperation) { // doing some math....
                 case 1:
-                    rezultat = firstNumber % secondNumber;
+                    if((int) firstNumber != firstNumber || (int) secondNumber != secondNumber)
+                        throw new IllegalArgumentException("Remainder not defined for non-integers");
+
+                    result = firstNumber % secondNumber; // here "%" represents the remainder operator (defined only for integers) instead of the percentage
                     break;
                 case 2:
-                    rezultat = firstNumber / secondNumber;
+                    if(secondNumber == 0) throw new IllegalArgumentException ("Division by zero");
+                    result = firstNumber / secondNumber;
                     break;
                 case 3:
-                    rezultat = firstNumber * secondNumber;
+                    result = firstNumber * secondNumber;
                     break;
                 case 4:
-                    rezultat = firstNumber - secondNumber;
+                    result = firstNumber - secondNumber;
                     break;
                 case 5:
-                    rezultat = firstNumber + secondNumber;
+                    result = firstNumber + secondNumber;
                     break;
                 default:
                     return;
             }
-            if (Math.rint(rezultat) == rezultat)
-                setDisplayText(String.valueOf((int)(rezultat)));
-            else
-                setDisplayText(String.valueOf(rezultat));
+
+            setDisplayText(String.valueOf(result));
+
             lastOperation = 0;
             newNumber = true;
+
+
+
         }
 
     public void decimalSeparatorClick(ActionEvent actionEvent) {
@@ -187,7 +194,7 @@ public class Controller {
         numberInput("9");
     }
 
-    public void keyboardPress(javafx.scene.input.KeyEvent keyEvent) {
+    public void keyboardPress(javafx.scene.input.KeyEvent keyEvent) { // support for keyboard
         switch (keyEvent.getCode()) {
             case NUMPAD0:
                 btn0.requestFocus();
@@ -230,31 +237,31 @@ public class Controller {
                 inputNine(null);
                 break;
             case DECIMAL:
-                comma.requestFocus();
+                dotBtn.requestFocus();
                 decimalSeparatorClick(null);
                 break;
             case DIVIDE:
-                divide.requestFocus();
+                divideBtn.requestFocus();
                 divideClick(null);
                 break;
             case MULTIPLY:
-                multiply.requestFocus();
+                multiplyBtn.requestFocus();
                 multiplyClick(null);
                 break;
             case SUBTRACT:
-                minus.requestFocus();
+                minusBtn.requestFocus();
                 substractClick(null);
                 break;
             case ADD:
-                plus.requestFocus();
+                plusBtn.requestFocus();
                 addClick(null);
                 break;
             case PLUS:
-                percentage.requestFocus();
+                percentageBtn.requestFocus();
                 percentageClick(null);
                 break;
             case ENTER:
-                equals.requestFocus();
+                equalsBtn.requestFocus();
                 equalClick(null);
                 break;
             case BACK_SPACE:
@@ -262,10 +269,10 @@ public class Controller {
                 if (displayText.get().length() != 0) {
                     if (displayText.get().charAt(displayText.get().length() - 1) == '.')
                         decimalSeparator = false;
-                    displayText.set(displayText.get().substring(0, displayText.get().length() - 1));
+                    displayText.set(displayText.get().substring(0, displayText.get().length() - 1)); // deleting one number or decimal separator
                 }
                 break;
-            case DELETE:
+            case DELETE: // default look
                 display.requestFocus();
                 displayText.set("0");
                 decimalSeparator = false;

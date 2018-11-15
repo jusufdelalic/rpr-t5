@@ -1,2 +1,13 @@
-#display {-fx-background-color: blue}
-#display {-fx-background-color: pink}
+.label {
+    -fx-background-color: lightgreen;
+    -fx-font-weight: bold;
+    -fx-font-size: 18;
+}
+
+.label2 {
+    -fx-font-size: 14;
+}
+
+#equalsBtn {
+    -fx-background-color: indianred;
+}

@@ -1,13 +1,9 @@
 package ba.unsa.etf.rpr.tutorijal05;
 
-import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
 
-import java.awt.event.KeyEvent;
-import java.security.Key;
 import java.util.ArrayList;
 
 public class Controller {
@@ -16,8 +12,8 @@ public class Controller {
     private String displayText;
     private int lastOperation;
     private String firstInput;
-    private ArrayList<Button> digits = new ArrayList<Button>(10);
-    private ArrayList<Button> operators = new ArrayList<Button>(7);
+    private ArrayList<Button> digits = new ArrayList<>(10);
+    private ArrayList<Button> operators = new ArrayList<>(7);
 
     boolean decimalSeparator = false;
     boolean newNumber = false;
@@ -25,7 +21,7 @@ public class Controller {
     public Label display;
 
     public Controller() {
-        displayText = new String("0");
+        displayText = "0";
     }
 
     public String getDisplayText() {
@@ -60,9 +56,38 @@ public class Controller {
             setDisplayText(getDisplayText().substring(1)); // 05 = 5
     }
 
+    public void inputZero(ActionEvent actionEvent) {
+        numberInput("0");
+    }
     public void inputOne(ActionEvent actionEvent) {
         numberInput("1");
     }
+    public void inputTwo(ActionEvent actionEvent) {
+        numberInput("2");
+    }
+    public void inputThree(ActionEvent actionEvent) {
+        numberInput("3");
+    }
+    public void inputFour(ActionEvent actionEvent) {
+        numberInput("4");
+    }
+    public void inputFive(ActionEvent actionEvent) {
+        numberInput("5");
+    }
+    public void inputSix(ActionEvent actionEvent) {
+        numberInput("6");
+    }
+    public void inputSeven(ActionEvent actionEvent) {
+        numberInput("7");
+    }
+    public void inputEight(ActionEvent actionEvent) {
+        numberInput("8");
+    }
+    public void inputNine(ActionEvent actionEvent) {
+        numberInput("9");
+    }
+
+
 
 
 }
